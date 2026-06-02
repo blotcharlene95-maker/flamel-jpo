@@ -204,8 +204,7 @@ const STOPS = [
 function getBase() {
   const input = document.getElementById('baseUrl').value.trim();
   if (input) return input;
-  // Auto-detect : remplace qrcodes.html par l'app
-  return window.location.origin + '/index.html';
+  return window.location.origin + '/flamel-jpo/index.html';
 }
 
 function regenerate() {
@@ -246,7 +245,7 @@ function regenerate() {
 // Initialisation automatique
 window.addEventListener('load', () => {
   // Pre-fill avec l'URL détectée
-  const auto = window.location.origin + '/index.html';
+  const auto = window.location.origin + '/flamel-jpo/index.html';
   document.getElementById('baseUrl').value = auto;
   regenerate();
 });
