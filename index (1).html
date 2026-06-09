@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>À la découverte du collège Nicolas Flamel</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:linear-gradient(135deg,#0d0500,#1a0900,#0d0500);
+  min-height:100vh;font-family:'Palatino Linotype',Palatino,serif;color:#c4a060}
+button{cursor:pointer;font-family:inherit}
+button:hover{filter:brightness(1.12)}
+
+@keyframes rise{0%{transform:translateY(0);opacity:.7}100%{transform:translateY(-100vh);opacity:0}}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes flicker{0%,100%{opacity:1}50%{opacity:.75}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
+
+/* Particules */
+.particle{position:fixed;border-radius:50%;pointer-events:none;z-index:0;opacity:.55;animation:rise linear infinite}
+
+/* Layout */
+#app{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:16px 16px 48px}
+
+/* Titre */
+.titre{text-align:center;padding:14px 0 16px}
+.titre .emoji{font-size:44px;display:block;margin-bottom:6px;animation:flicker 3s infinite}
+.titre h1{font-size:19px;letter-spacing:1px;line-height:1.3;margin:0 0 4px;
+  background:linear-gradient(90deg,#8B6914,#d4a017,#f0c040,#d4a017,#8B6914);
+  background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:shimmer 3s linear infinite}
+.titre p{color:#8B6914;font-size:11px;letter-spacing:3px;text-transform:uppercase}
+
+/* Score */
+.score-bar{display:flex;justify-content:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.score-pill{display:flex;align-items:center;gap:6px;border-radius:20px;padding:5px 16px}
+.score-pill.good{background:rgba(30,100,30,.25);border:1px solid rgba(80,200,80,.4)}
+.score-pill.bad{background:rgba(100,20,20,.25);border:1px solid rgba(200,80,80,.4)}
+.score-pill .n{font-size:18px;font-weight:bold}
+.score-pill.good .n{color:#80e880}
+.score-pill.bad .n{color:#e88080}
+.score-pill .lbl{font-size:13px}
+.score-pill.good .lbl{color:#4a8a4a}
+.score-pill.bad .lbl{color:#8a4a4a}
+
+/* Progress dots */
+.dots{display:flex;justify-content:center;gap:5px;margin-bottom:18px}
+.dot{height:6px;border-radius:3px;transition:all .3s}
+
+/* Bienvenue Q1 */
+.welcome-block{text-align:center;margin-bottom:16px;animation:fadeUp .5s both}
+.welcome-block img{width:100px;height:100px;object-fit:cover;border-radius:50%;
+  border:3px solid #d4a017;box-shadow:0 0 24px rgba(212,160,23,.5);margin-bottom:12px}
+.welcome-text{background:rgba(0,0,0,.45);border:1px solid rgba(212,160,23,.35);
+  border-radius:8px;padding:12px 16px;color:#f0d88a;font-size:15px;line-height:1.75}
+
+/* Card */
+.card{background:linear-gradient(145deg,#1a0e00,#2d1900);border:2px solid #8B6914;
+  border-radius:6px;overflow:hidden;box-shadow:0 0 40px rgba(212,160,23,.18);animation:fadeUp .4s both}
+.card-head{background:#1a0900;border-bottom:1px solid #6a4a00;
+  padding:13px 18px;display:flex;align-items:center;gap:12px}
+.card-head .icon{width:38px;height:38px;border-radius:50%;border:1px solid #d4a017;
+  display:flex;align-items:center;justify-content:center;font-size:17px;
+  background:rgba(212,160,23,.1);flex-shrink:0}
+.card-head .num{color:#8B6914;font-size:12px;letter-spacing:2px;text-transform:uppercase}
+.card-head .lieu{color:#d4a017;font-size:14px;margin-top:2px}
+.card-body{padding:22px 18px 26px}
+
+/* Question */
+.question{color:#e8d5a0;font-size:19px;line-height:1.65;text-align:center;
+  margin:0 0 22px;font-weight:bold}
+
+/* Réponses */
+.answers{display:flex;flex-direction:column;gap:10px}
+.answers.shake{animation:shake .45s}
+.answer-btn{background:rgba(212,160,23,.07);border:1px solid rgba(212,160,23,.28);
+  border-radius:5px;padding:14px 16px;color:#c4a060;font-size:16px;
+  text-align:left;display:flex;align-items:center;gap:10px;transition:all .2s;width:100%}
+.answer-btn:hover{background:rgba(212,160,23,.15)}
+.answer-btn .badge{width:26px;height:26px;border-radius:50%;flex-shrink:0;
+  border:1px solid rgba(212,160,23,.4);display:flex;align-items:center;
+  justify-content:center;font-size:13px;color:#d4a017}
+.answer-btn.correct{background:rgba(30,120,30,.3);border-color:#4a9a4a;color:#90e890;cursor:default}
+.answer-btn.wrong{background:rgba(150,30,30,.3);border-color:#c04040;color:#e88080;cursor:default}
+.answer-btn.neutral{cursor:default}
+
+/* Résultat */
+.result-banner{border-radius:5px;padding:11px 14px;text-align:center;margin-bottom:14px}
+.result-banner.ok{background:rgba(30,100,30,.25);border:1px solid rgba(80,200,80,.5)}
+.result-banner.ko{background:rgba(150,30,30,.25);border:1px solid rgba(200,80,80,.5)}
+.result-banner .rtxt{font-size:16px;font-weight:bold;margin-left:8px;vertical-align:middle}
+.result-banner.ok .rtxt{color:#80e880}
+.result-banner.ko .rtxt{color:#ffaa66}
+
+/* Explication */
+.explication{background:rgba(212,160,23,.07);border:1px solid rgba(212,160,23,.2);
+  border-radius:5px;padding:14px 16px;color:#c4a060;font-size:15px;line-height:1.8}
+.explication .hdr{color:#d4a017;font-size:11px;letter-spacing:2px;
+  text-transform:uppercase;text-align:center;margin-bottom:8px}
+
+/* Bonus */
+.bonus-box{background:linear-gradient(135deg,rgba(212,160,23,.18),rgba(212,160,23,.08));
+  border:2px solid #d4a017;border-radius:8px;padding:14px 18px;text-align:center;
+  animation:pulse 2.5s ease-in-out infinite;box-shadow:0 0 20px rgba(212,160,23,.25)}
+.bonus-box p{color:#f0c040;font-size:17px;font-weight:bold;line-height:1.5;letter-spacing:.5px}
+
+/* Prochaine étape */
+.next-box{background:rgba(0,0,0,.35);border:1px solid rgba(212,160,23,.3);
+  border-radius:6px;padding:16px;text-align:center}
+.next-box .next-lbl{color:#8B6914;font-size:11px;letter-spacing:2px;
+  text-transform:uppercase;margin-bottom:8px}
+.next-box .next-txt{color:#e8d5a0;font-size:16px;line-height:1.65}
+.next-box .next-txt strong{color:#d4a017}
+
+/* Info SEGPA */
+.info-box{background:rgba(212,160,23,.07);border:1px solid rgba(212,160,23,.2);
+  border-radius:5px;padding:16px;color:#c4a060;font-size:15px;line-height:1.85}
+.info-box .hdr{color:#d4a017;font-size:11px;letter-spacing:2px;
+  text-transform:uppercase;text-align:center;margin-bottom:10px}
+
+/* Bouton doré */
+.btn-gold{display:block;width:100%;padding:16px;
+  background:linear-gradient(135deg,#7a5a10,#d4a017);
+  border:none;border-radius:5px;color:#1a0800;font-size:17px;
+  font-weight:bold;letter-spacing:1px;
+  box-shadow:0 4px 20px rgba(212,160,23,.4)}
+
+/* Diplôme */
+#diploma{min-height:100vh;display:flex;align-items:center;
+  justify-content:center;padding:20px 16px}
+.diploma-outer{background:linear-gradient(145deg,#1a0e00,#2d1900,#1a0e00);
+  border:3px solid #d4a017;border-radius:4px;padding:10px;
+  box-shadow:0 0 60px rgba(212,160,23,.35),inset 0 0 40px rgba(0,0,0,.4);
+  width:100%;max-width:480px;animation:popIn .8s both}
+.diploma-inner{border:1px solid rgba(212,160,23,.35);border-radius:2px;
+  padding:24px 20px;position:relative}
+.corner{position:absolute;width:16px;height:16px}
+.corner.tl{top:12px;left:12px;border-top:2px solid #d4a017;border-left:2px solid #d4a017}
+.corner.tr{top:12px;right:12px;border-top:2px solid #d4a017;border-right:2px solid #d4a017}
+.corner.bl{bottom:12px;left:12px;border-bottom:2px solid #d4a017;border-left:2px solid #d4a017}
+.corner.br{bottom:12px;right:12px;border-bottom:2px solid #d4a017;border-right:2px solid #d4a017}
+.diploma-emoji{font-size:48px;animation:flicker 3s infinite;display:block;
+  text-align:center;margin-bottom:8px}
+.diploma-sub{font-size:11px;color:#8B6914;letter-spacing:3px;
+  text-transform:uppercase;text-align:center;margin-bottom:6px}
+.diploma-title{font-size:18px;letter-spacing:2px;text-align:center;line-height:1.3;
+  background:linear-gradient(90deg,#8B6914,#d4a017,#f0c040,#d4a017,#8B6914);
+  background-size:200% auto;-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;animation:shimmer 3s linear infinite}
+.divider{height:1px;background:linear-gradient(90deg,transparent,#d4a017,transparent);
+  margin:14px 0}
+.diploma-body{text-align:center;line-height:2;margin-bottom:16px}
+.diploma-body .lbl{color:#a08040;font-size:13px;margin:0 0 2px}
+.diploma-body .hero{font-size:20px;color:#f0c040;letter-spacing:1px;margin:0 0 2px}
+.diploma-body .coll{font-size:18px;color:#d4a017;margin:0 0 2px}
+.diploma-body .score{font-size:40px;font-weight:bold;margin:4px 0 2px;display:block}
+.progress-track{background:rgba(0,0,0,.4);border-radius:8px;height:14px;
+  margin-bottom:6px;overflow:hidden;border:1px solid rgba(212,160,23,.2)}
+.progress-fill{height:100%;background:linear-gradient(90deg,#4a8a4a,#80e880);
+  border-radius:8px;transition:width 1s ease}
+.progress-labels{display:flex;justify-content:space-between;
+  font-size:12px;color:#8B6914;margin-bottom:14px}
+.seal{display:inline-flex;align-items:center;justify-content:center;
+  width:66px;height:66px;border-radius:50%;
+  background:radial-gradient(circle,#2d1900,#1a0800);
+  border:2px solid #d4a017;box-shadow:0 0 20px rgba(212,160,23,.4);
+  position:relative;margin:0 auto 14px;display:flex}
+.seal-ring{position:absolute;inset:4px;border-radius:50%;
+  border:1px dashed rgba(212,160,23,.3);animation:spin 20s linear infinite}
+.seal span{font-size:26px;position:relative;z-index:1}
+.fin-box{background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.3);
+  border-radius:5px;padding:16px;text-align:center;margin-bottom:14px}
+.fin-box .fin-emoji{font-size:24px;margin-bottom:6px}
+.fin-box .fin-titre{color:#f0c040;font-size:18px;font-weight:bold;
+  margin:0 0 6px;line-height:1.4}
+.fin-box .fin-txt{color:#c4a060;font-size:16px;line-height:1.5}
+.date-txt{text-align:center;font-size:11px;color:#6a4a10;margin-bottom:14px}
+.btn-share{display:block;width:100%;padding:14px;
+  background:linear-gradient(135deg,#7a5a10,#d4a017,#7a5a10);
+  border:none;border-radius:5px;color:#1a0800;font-size:14px;
+  font-weight:bold;letter-spacing:1px;text-transform:uppercase;
+  box-shadow:0 4px 20px rgba(212,160,23,.35)}
+
+.mt8{margin-top:8px}
+.mt12{margin-top:12px}
+.mt14{margin-top:14px}
+.mt18{margin-top:18px}
+.mb14{margin-bottom:14px}
+.mb18{margin-bottom:18px}
+</style>
+</head>
+<body>
+
+<!-- Particules (injectées via JS) -->
+<div id="particles"></div>
+
+<!-- App principale -->
+<div id="app" style="display:none"></div>
+
+<!-- Diplôme -->
+<div id="diploma" style="display:none">
+  <div class="diploma-outer">
+    <div class="diploma-inner">
+      <div class="corner tl"></div><div class="corner tr"></div>
+      <div class="corner bl"></div><div class="corner br"></div>
+      <span class="diploma-emoji">⚗️</span>
+      <div class="diploma-sub">Journées Portes Ouvertes</div>
+      <div class="diploma-title">DIPLÔME DE LA GRANDE ŒUVRE</div>
+      <div class="divider"></div>
+      <div class="diploma-body">
+        <p class="lbl">Ce diplôme certifie que</p>
+        <p class="hero">L'Intrépide Visiteur</p>
+        <p class="lbl">a parcouru</p>
+        <p class="coll">le collège Nicolas Flamel</p>
+        <p class="lbl">et a obtenu</p>
+        <span class="score" id="score-display">–</span>
+        <p class="lbl" id="score-lbl"></p>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+      <div class="progress-labels">
+        <span id="prog-left"></span>
+        <span id="prog-pct"></span>
+        <span id="prog-right"></span>
+      </div>
+      <div class="divider"></div>
+      <div style="text-align:center;margin-bottom:14px">
+        <div class="seal">
+          <div class="seal-ring"></div>
+          <span>🏅</span>
+        </div>
+      </div>
+      <div class="fin-box">
+        <div class="fin-emoji">🎉</div>
+        <p class="fin-titre">Bravo, vous avez fini la visite !</p>
+      </div>
+      <div class="bonus-box" style="margin-bottom:14px">
+        <p>🎬 Place aux inscriptions en salle audiovisuelle</p>
+      </div>
+      <div class="date-txt" id="date-txt"></div>
+      <button class="btn-share" id="share-btn">⚡ Partager mon score</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════
+   DONNÉES
+═══════════════════════════════════════ */
+const STOPS=[
+  {id:1,lieu:"Hall d'entrée",
+   question:"Qui est Nicolas Flamel ?",
+   reponses:["Un alchimiste et libraire parisien du XIVe siècle","Un célèbre roi de France du Moyen Âge","Un chevalier de la Table Ronde de la légende arthurienne"],
+   correcte:0,
+   explication:"Nicolas Flamel (vers 1330–1418) est né à Pontoise. Scribe et libraire à Paris, il est devenu la figure légendaire de l'alchimie. La légende raconte qu'il aurait découvert la Pierre Philosophale et transmué des métaux en or. Votre collège porte fièrement son nom !"},
+  {id:2,lieu:"Permanence",
+   question:"À quoi sert le dispositif pHARe ?",
+   reponses:["Prévenir et accompagner les élèves et les parents dans les situations de harcèlement","Surveiller les absences des élèves","Voir dans la nuit"],
+   correcte:0,
+   explication:"Le dispositif pHARe (Prévention du Harcèlement et Accompagnement de la Résolution à l'École) est le programme national de lutte contre le harcèlement scolaire. Au collège, des élèves ambassadeurs sont formés pour repérer et agir contre le harcèlement."},
+  {id:3,lieu:"Salle 105",
+   question:"Savez-vous ce que signifie le label E3D ?",
+   reponses:["Établissement en démarche globale de développement durable","Éducation développement durabilité","Engagement 3D numérique"],
+   correcte:0,
+   explication:"Le label E3D reconnaît les établissements scolaires qui intègrent le développement durable dans leur projet éducatif : gestion des déchets, économies d'énergie, biodiversité... Le collège Nicolas Flamel est fier d'en faire partie !"},
+  {id:4,lieu:"Salle 110",
+   question:"Quelles options de langues sont proposées au collège à partir de la 5e ?",
+   reponses:["LCE espagnol, LCE anglais, latin, grec","LCE chinois, grec, latin","Latin, grec, russe"],
+   correcte:0,
+   explication:"À partir de la 5e, les élèves peuvent enrichir leur parcours linguistique avec des Langues et Cultures Étrangères (LCE espagnol ou anglais approfondi) ou se lancer dans l'apprentissage du latin, voire du grec. De solides bases pour la suite !"},
+  {id:5,lieu:"Salle 220",
+   question:"Quel est le nombre d'heures dispensées par semaine en français en 6e ?",
+   reponses:["4h30","2h","6h"],
+   correcte:0,
+   explication:"En classe de 6e, les élèves bénéficient de 4h30 de français par semaine. C'est une matière fondamentale pour développer la lecture, l'écriture et l'expression orale. N'hésitez pas à interroger les professeurs pour plus de détails sur le programme !"},
+  {id:6,lieu:"Salle 216",
+   question:"Que signifie EMC ?",
+   reponses:["Éducation morale et civique","École Mobile Citoyenne","Entraide Morale et Culturelle"],
+   correcte:0,
+   explication:"L'Éducation Morale et Civique (EMC) est enseignée à tous les niveaux du collège. Elle vise à former des citoyens éclairés, capables de vivre ensemble, de comprendre les valeurs républicaines et de s'engager dans la vie démocratique."},
+  {id:7,lieu:"Salles 214 et 211",
+   question:"Quel est le nombre d'élèves approximatif au collège en 2026 ?",
+   reponses:["300 + 200","600 − 100","1 000 ÷ 2"],
+   correcte:-1,allCorrect:true,
+   explication:"Bravo, vous avez bon quelle que soit votre réponse ! 300 + 200 = 500, 600 − 100 = 500, 1 000 ÷ 2 = 500. Le collège Nicolas Flamel accueille environ 500 élèves en 2026. Une question avec que des bonnes réponses, comme quoi les maths peuvent être généreuses !"},
+  {id:8,lieu:"CDI",
+   question:"Que veut dire CDI ?",
+   reponses:["Centre de documentation et d'information","Centre de données et d'information","Centre d'aide et d'indication"],
+   correcte:0,
+   explication:"Le Centre de Documentation et d'Information est le cœur culturel du collège. On y trouve livres, magazines, ressources numériques, et surtout une documentaliste qui accompagne les élèves dans leurs recherches et leur goût de la lecture.",
+   bonus:"🎁 Une surprise vous attend en SEGPA…"},
+  {id:9,lieu:"SEGPA",
+   infoOnly:true,
+   explication:"La Section d'Enseignement Général et Professionnel Adapté est un dispositif pour les élèves en grande difficulté scolaire. Ils y bénéficient d'un enseignement général, comme tous les collégiens, mais aussi, à partir de la 4e, d'enseignement professionnel. Au collège, les champs professionnels sont Habitat et HAS (Hygiène Alimentation Service).",
+   bonus:"🍰 Pour les gourmands, une surprise vous attend à l'intérieur !"},
+  {id:10,lieu:"Hall de la SEGPA",
+   question:"Dans quel sport les élèves du collège se sont-ils qualifiés pour les Championnats de France UNSS ?",
+   reponses:["Judo","Basket","Football"],
+   correcte:1,
+   explication:"Les élèves du collège Nicolas Flamel se sont qualifiés pour les Championnats de France UNSS en Basket ! Une belle performance qui témoigne de l'investissement des élèves et des professeurs d'EPS. Bravo à eux !"},
+];
+const SCORED=STOPS.filter(s=>!s.infoOnly).length;
+const STORE_KEY="flamelJPO_2026";
+
+/* ═══════════════════════════════════════
+   STORE
+═══════════════════════════════════════ */
+function loadStore(){
+  try{return JSON.parse(localStorage.getItem(STORE_KEY)||"null")||{correct:0,wrong:0,answered:{}};}
+  catch(e){return{correct:0,wrong:0,answered:{}};}
+}
+function saveStore(s){try{localStorage.setItem(STORE_KEY,JSON.stringify(s));}catch(e){}}
+let store=loadStore();
+
+/* ═══════════════════════════════════════
+   PARTICULES
+═══════════════════════════════════════ */
+(function(){
+  const wrap=document.getElementById('particles');
+  for(let i=0;i<14;i++){
+    const d=document.createElement('div');
+    d.className='particle';
+    const size=2+(i%3);
+    const col=i%3===0?'#d4a017':i%3===1?'#c0392b':'#8B6914';
+    const left=(i*7.3+3)%100;
+    const dur=7+(i%6);
+    const del=(i*1.3)%7;
+    d.style.cssText=`left:${left}%;bottom:-8px;width:${size}px;height:${size}px;`+
+      `background:${col};animation-duration:${dur}s;animation-delay:${del}s`;
+    wrap.appendChild(d);
+  }
+})();
+
+/* ═══════════════════════════════════════
+   HELPERS HTML
+═══════════════════════════════════════ */
+const h=(tag,cls,html,attrs='')=>`<${tag} class="${cls}" ${attrs}>${html}</${tag}>`;
+const div=(cls,html)=>h('div',cls,html);
+const esc=s=>String(s).replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+/* ═══════════════════════════════════════
+   RENDER
+═══════════════════════════════════════ */
+function getQId(){
+  const n=parseInt(new URLSearchParams(window.location.search).get('q'));
+  return(n>=1&&n<=STOPS.length)?n:1;
+}
+
+function render(){
+  const qId=getQId();
+  const stop=STOPS.find(s=>s.id===qId);
+  const app=document.getElementById('app');
+  app.style.display='block';
+  document.getElementById('diploma').style.display='none';
+
+  let html='';
+
+  // Titre
+  html+=`<div class="titre">
+    <span class="emoji">⚗️</span>
+    <h1>À la découverte du collège Nicolas Flamel</h1>
+    <p>Journées Portes Ouvertes</p>
+  </div>`;
+
+  // Score bar
+  html+=`<div class="score-bar">
+    <div class="score-pill good">
+      <span style="font-size:15px">✅</span>
+      <span class="n">${store.correct}</span>
+      <span class="lbl">bonne${store.correct>1?'s':''}</span>
+    </div>
+    <div class="score-pill bad">
+      <span style="font-size:15px">❌</span>
+      <span class="n">${store.wrong}</span>
+      <span class="lbl">mauvaise${store.wrong>1?'s':''}</span>
+    </div>
+  </div>`;
+
+  // Dots progression
+  html+='<div class="dots">';
+  STOPS.forEach(s=>{
+    const ans=store.answered[s.id];
+    let bg;
+    if(ans) bg=ans.wasCorrect?'#4a9a4a':'#c04040';
+    else if(s.id===qId) bg='#f0c040';
+    else bg='rgba(212,160,23,.2)';
+    const w=s.id===qId?20:6;
+    html+=`<div class="dot" style="width:${w}px;background:${bg}"></div>`;
+  });
+  html+='</div>';
+
+  // Bienvenue Q1
+  if(qId===1){
+    html+=`<div class="welcome-block">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Nicolas_flamel.jpg/220px-Nicolas_flamel.jpg"
+        alt="Nicolas Flamel" onerror="this.style.display='none'"
+        style="width:100px;height:100px;object-fit:cover;border-radius:50%;border:3px solid #d4a017;box-shadow:0 0 24px rgba(212,160,23,.5);margin-bottom:12px">
+      <div class="welcome-text">
+        Bienvenue ! Parcourez le collège et scannez les QR codes pour répondre aux énigmes sur le collège.
+        Votre première étape commence ici dans le hall d'entrée ! Voici votre première question…
+      </div>
+    </div>`;
+  }
+
+  // Contenu
+  if(stop.infoOnly){
+    html+=renderInfo(stop);
+  } else {
+    html+=renderQuestion(stop);
+  }
+
+  app.innerHTML=html;
+  bindEvents(stop);
+}
+
+/* ═════════════════
+   QUESTION
+═════════════════ */
+function renderQuestion(stop){
+  const ans=store.answered[stop.id];
+  const revealed=ans!=null;
+  let html=`<div class="card">
+    <div class="card-head">
+      <div class="icon">⚗️</div>
+      <div>
+        <div class="num">Énigme ${stop.id} / ${STOPS.length}</div>
+        <div class="lieu">📍 ${esc(stop.lieu)}</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p class="question">${esc(stop.question)}</p>
+      <div class="answers" id="answers-wrap">`;
+
+  stop.reponses.forEach((r,i)=>{
+    let cls='answer-btn';
+    let icon='';
+    if(revealed){
+      const isCorrect=stop.allCorrect||i===stop.correcte;
+      if(isCorrect){cls+=' correct';icon='✅ ';}
+      else if(i===ans.selected&&!ans.wasCorrect){cls+=' wrong';icon='❌ ';}
+      else cls+=' neutral';
+    }
+    const badge=revealed?'':`<span class="badge">${['A','B','C'][i]}</span>`;
+    html+=`<button class="${cls}" data-idx="${i}" ${revealed?'disabled':''}>
+      ${badge}<span>${icon}${esc(r)}</span>
+    </button>`;
+  });
+
+  html+='</div>'; // answers
+
+  if(revealed){
+    html+=renderResult(stop,ans);
+  }
+
+  html+='</div></div>'; // card-body card
+  return html;
+}
+
+function renderResult(stop,ans){
+  const nextStop=STOPS.find(s=>s.id===stop.id+1);
+  let html='';
+  html+=`<div class="mt18">
+    <div class="result-banner ${ans.wasCorrect?'ok':'ko'}">
+      <span style="font-size:20px">${ans.wasCorrect?'🎉':'💡'}</span>
+      <span class="rtxt">${ans.wasCorrect?'Bonne réponse !'
+        :'La bonne réponse était : '+esc(stop.reponses[stop.allCorrect?ans.selected:stop.correcte])}</span>
+    </div>
+    <div class="explication mb14">
+      <div class="hdr">📜 Le Saviez-Vous ?</div>
+      ${esc(stop.explication)}
+    </div>`;
+
+  if(stop.bonus){
+    html+=`<div class="bonus-box mb18"><p>${esc(stop.bonus)}</p></div>`;
+  }
+
+  if(nextStop){
+    html+=`<div class="next-box">
+      <div class="next-lbl">Prochaine étape</div>
+      <div style="font-size:22px;margin-bottom:8px">🗺️</div>
+      <p class="next-txt">Rendez-vous à <strong>${esc(nextStop.lieu)}</strong> pour scanner le prochain QR code !</p>
+    </div>`;
+  } else {
+    html+=`<div class="next-box">
+      <div style="font-size:22px;margin-bottom:8px">🗺️</div>
+      <p class="next-txt">Rendez-vous en <strong>SEGPA</strong> pour scanner le dernier QR code !</p>
+    </div>`;
+  }
+
+  html+='</div>';
+  return html;
+}
+
+/* ═════════════════
+   INFO (SEGPA)
+═════════════════ */
+function renderInfo(stop){
+  const nextStop=STOPS.find(s=>s.id===stop.id+1);
+  return `<div class="card">
+    <div class="card-head">
+      <div class="icon">🏫</div>
+      <div>
+        <div class="num">Étape ${stop.id} / ${STOPS.length}</div>
+        <div class="lieu">📍 ${esc(stop.lieu)}</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="info-box mb18">
+        <div class="hdr">🔬 À propos de la SEGPA</div>
+        ${esc(stop.explication)}
+      </div>
+      <div class="bonus-box mb18"><p>${esc(stop.bonus)}</p></div>
+      ${nextStop
+        ? `<div class="next-box">
+            <div class="next-lbl">Prochaine étape</div>
+            <div style="font-size:22px;margin-bottom:8px">🗺️</div>
+            <p class="next-txt">Rendez-vous dans le <strong>hall de la SEGPA</strong> pour scanner le prochain QR code !</p>
+           </div>`
+        : `<button class="btn-gold" id="diploma-btn">🏆 Voir mon diplôme</button>`
+      }
+    </div>
+  </div>`;
+}
+
+/* ═════════════════
+   DIPLÔME
+═════════════════ */
+function showDiploma(){
+  document.getElementById('app').style.display='none';
+  const dip=document.getElementById('diploma');
+  dip.style.display='flex';
+
+  const pct=Math.round((store.correct/SCORED)*100);
+  const sc=document.getElementById('score-display');
+  sc.textContent=`${store.correct} / ${SCORED}`;
+  sc.style.color=store.correct>=6?'#80e880':store.correct>=4?'#f0c040':'#e88080';
+  document.getElementById('score-lbl').textContent=
+    `bonne${store.correct>1?'s':''} réponse${store.correct>1?'s':''}`;
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-left').textContent=`✅ ${store.correct} correcte${store.correct>1?'s':''}`;
+  document.getElementById('prog-pct').textContent=pct+'%';
+  document.getElementById('prog-right').textContent=`❌ ${store.wrong} incorrecte${store.wrong>1?'s':''}`;
+  document.getElementById('date-txt').textContent=
+    new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+
+  document.getElementById('share-btn').onclick=async()=>{
+    const msg=`J'ai obtenu ${store.correct}/${SCORED} à la visite du collège Nicolas Flamel ! ⚗️🏆`;
+    try{
+      if(navigator.share)await navigator.share({title:'Diplôme – Collège Nicolas Flamel',text:msg});
+      else{navigator.clipboard&&navigator.clipboard.writeText(msg);alert('Score copié !');}
+    }catch(e){}
+  };
+}
+
+/* ═════════════════
+   EVENTS
+═════════════════ */
+function bindEvents(stop){
+  if(stop.infoOnly){
+    const btn=document.getElementById('diploma-btn');
+    if(btn)btn.onclick=showDiploma;
+    return;
+  }
+  const wrap=document.getElementById('answers-wrap');
+  if(!wrap)return;
+  wrap.querySelectorAll('[data-idx]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const i=parseInt(btn.dataset.idx);
+      if(store.answered[stop.id])return;
+      const isCorrect=stop.allCorrect||i===stop.correcte;
+
+      if(!isCorrect){
+        wrap.classList.add('shake');
+        setTimeout(()=>wrap.classList.remove('shake'),450);
+      }
+
+      store={
+        correct:store.correct+(isCorrect?1:0),
+        wrong:store.wrong+(isCorrect?0:1),
+        answered:{...store.answered,[stop.id]:{selected:i,wasCorrect:isCorrect}}
+      };
+      saveStore(store);
+      render();
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  });
+}
+
+/* ═════════════════
+   INIT
+═════════════════ */
+render();
+</script>
+</body>
+</html>
