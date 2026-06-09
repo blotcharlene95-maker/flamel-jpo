@@ -197,14 +197,16 @@ const STOPS = [
   { id:5, lieu:"Salle 220",         question:"Combien d'heures de français en 6e ?" },
   { id:6, lieu:"Salle 220",         question:"Que signifie EMC ?" },
   { id:7, lieu:"Deuxième étage",    question:"Combien d'élèves au collège en 2026 ?" },
-  { id:8, lieu:"CDI",               question:"Que veut dire CDI ?" },
-  { id:9, lieu:"SEGPA",             question:"(Découverte de la SEGPA — dernière étape)"},
+  { id:8, lieu:"CDI",              question:"Que veut dire CDI ?" },
+  { id:9, lieu:"SEGPA",            question:"(Découverte de la SEGPA)" },
+  { id:10,lieu:"Hall de la SEGPA", question:"Dans quel sport les élèves se sont-ils qualifiés pour les Championnats de France UNSS ?" },
 ];
 
 function getBase() {
   const input = document.getElementById('baseUrl').value.trim();
   if (input) return input;
-  return window.location.origin + '/flamel-jpo/index.html';
+  // Auto-detect : remplace qrcodes.html par l'app
+  return window.location.origin + '/index.html';
 }
 
 function regenerate() {
@@ -245,7 +247,7 @@ function regenerate() {
 // Initialisation automatique
 window.addEventListener('load', () => {
   // Pre-fill avec l'URL détectée
-  const auto = window.location.origin + '/flamel-jpo/index.html';
+  const auto = window.location.origin + '/index.html';
   document.getElementById('baseUrl').value = auto;
   regenerate();
 });

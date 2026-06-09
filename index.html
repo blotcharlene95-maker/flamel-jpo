@@ -236,7 +236,9 @@ button:hover{filter:brightness(1.12)}
       <div class="fin-box">
         <div class="fin-emoji">🎉</div>
         <p class="fin-titre">Bravo, vous avez fini la visite !</p>
-        <p class="fin-txt">Place aux inscriptions.</p>
+      </div>
+      <div class="bonus-box" style="margin-bottom:14px">
+        <p>🎬 Place aux inscriptions en salle audiovisuelle</p>
       </div>
       <div class="date-txt" id="date-txt"></div>
       <button class="btn-share" id="share-btn">⚡ Partager mon score</button>
@@ -274,12 +276,12 @@ const STOPS=[
    reponses:["4h30","2h","6h"],
    correcte:0,
    explication:"En classe de 6e, les élèves bénéficient de 4h30 de français par semaine. C'est une matière fondamentale pour développer la lecture, l'écriture et l'expression orale. N'hésitez pas à interroger les professeurs pour plus de détails sur le programme !"},
-  {id:6,lieu:"Salle 220",
+  {id:6,lieu:"Salle 216",
    question:"Que signifie EMC ?",
    reponses:["Éducation morale et civique","École Mobile Citoyenne","Entraide Morale et Culturelle"],
    correcte:0,
    explication:"L'Éducation Morale et Civique (EMC) est enseignée à tous les niveaux du collège. Elle vise à former des citoyens éclairés, capables de vivre ensemble, de comprendre les valeurs républicaines et de s'engager dans la vie démocratique."},
-  {id:7,lieu:"Deuxième étage",
+  {id:7,lieu:"Salles 214 et 211",
    question:"Quel est le nombre d'élèves approximatif au collège en 2026 ?",
    reponses:["300 + 200","600 − 100","1 000 ÷ 2"],
    correcte:-1,allCorrect:true,
@@ -294,6 +296,11 @@ const STOPS=[
    infoOnly:true,
    explication:"La Section d'Enseignement Général et Professionnel Adapté est un dispositif pour les élèves en grande difficulté scolaire. Ils y bénéficient d'un enseignement général, comme tous les collégiens, mais aussi, à partir de la 4e, d'enseignement professionnel. Au collège, les champs professionnels sont Habitat et HAS (Hygiène Alimentation Service).",
    bonus:"🍰 Pour les gourmands, une surprise vous attend à l'intérieur !"},
+  {id:10,lieu:"Hall de la SEGPA",
+   question:"Dans quel sport les élèves du collège se sont-ils qualifiés pour les Championnats de France UNSS ?",
+   reponses:["Judo","Basket","Football"],
+   correcte:1,
+   explication:"Les élèves du collège Nicolas Flamel se sont qualifiés pour les Championnats de France UNSS en Basket ! Une belle performance qui témoigne de l'investissement des élèves et des professeurs d'EPS. Bravo à eux !"},
 ];
 const SCORED=STOPS.filter(s=>!s.infoOnly).length;
 const STORE_KEY="flamelJPO_2026";
@@ -491,6 +498,7 @@ function renderResult(stop,ans){
    INFO (SEGPA)
 ═════════════════ */
 function renderInfo(stop){
+  const nextStop=STOPS.find(s=>s.id===stop.id+1);
   return `<div class="card">
     <div class="card-head">
       <div class="icon">🏫</div>
@@ -505,7 +513,14 @@ function renderInfo(stop){
         ${esc(stop.explication)}
       </div>
       <div class="bonus-box mb18"><p>${esc(stop.bonus)}</p></div>
-      <button class="btn-gold" id="diploma-btn">🏆 Voir mon diplôme</button>
+      ${nextStop
+        ? `<div class="next-box">
+            <div class="next-lbl">Prochaine étape</div>
+            <div style="font-size:22px;margin-bottom:8px">🗺️</div>
+            <p class="next-txt">Rendez-vous dans le <strong>hall de la SEGPA</strong> pour scanner le prochain QR code !</p>
+           </div>`
+        : `<button class="btn-gold" id="diploma-btn">🏆 Voir mon diplôme</button>`
+      }
     </div>
   </div>`;
 }
