@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>QR Codes – Journées Portes Ouvertes – Collège Nicolas Flamel</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Palatino Linotype',Palatino,serif;background:#f5f0e8;color:#2a1a00;padding:24px}
+.page-title{text-align:center;margin-bottom:16px}
+.page-title h1{font-size:22px;color:#7a4a00;letter-spacing:1px}
+.page-title p{font-size:14px;color:#9a6a20;margin-top:4px}
+.print-btn{display:block;margin:0 auto 24px;background:#2a6a2a;color:white;
+  border:none;border-radius:8px;padding:12px 32px;font-size:16px;
+  cursor:pointer;letter-spacing:1px;font-family:inherit}
+.print-btn:hover{background:#1a4a1a}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:860px;margin:0 auto}
+.card{background:white;border:2px solid #c8a050;border-radius:10px;
+  padding:14px 10px 12px;text-align:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.1);
+  page-break-inside:avoid;break-inside:avoid}
+.card-header{background:linear-gradient(135deg,#7a4a00,#c8860a);color:white;
+  border-radius:6px;padding:7px 10px;margin-bottom:10px}
+.card-header .num{font-size:11px;letter-spacing:2px;text-transform:uppercase;opacity:.85}
+.card-header .lieu{font-size:14px;font-weight:bold;margin-top:2px}
+.card img{border:3px solid #c8a050;border-radius:6px;padding:3px;
+  background:white;display:block;margin:0 auto 8px;width:160px;height:160px}
+.card-question{font-size:12px;color:#5a3a00;line-height:1.4;font-style:italic;min-height:36px}
+.footer{text-align:center;margin-top:24px;font-size:12px;color:#9a7a40}
+@media print{
+  body{background:white;padding:8px}
+  .print-btn{display:none}
+  .grid{gap:8px;max-width:100%}
+  .card{box-shadow:none;border:1.5px solid #c8a050}
+}
+</style>
+</head>
+<body>
+<div class="page-title">
+  <h1>⚗️ À la découverte du collège Nicolas Flamel</h1>
+  <p>Journées Portes Ouvertes — QR Codes à imprimer et afficher dans chaque salle</p>
+</div>
+<button class="print-btn" onclick="window.print()">🖨️ Imprimer les QR codes</button>
+<div class="grid">
+    <div class="card">
+      <div class="card-header">
+        <div class="num">QR Code 1 / 10</div>
+        <div class="lieu">📍 Hall d'entrée</div>
+      </div>
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2AQAAAADNaUdlAAACW0lEQVR4nO2ZQW4bSwxEX5sDaEkBOcA/SvtmQm5GHcU34CwNUKi/4MjJIrEN/I9YDYQ7DReq6Smyiuwh3ovb07tp+Jv/b3mUAJZTCpOKKQVMAGZ9Nb5P4J+STGE5i1muYppkknIN/DBNwkOJKZSzXJbYAvjv+f25mLd/xH7Bv28Ph+938Yb0eirsZZjH7VuyP/+h//8/8lIAtzE2j9fxbHlVgqseBN8H+esYA6blZL+ckm2/bHAbY5wfAt/7oY6cksolRTFh9uOHr1+Us1tQeVjObj4tCmv0z6Nzzv4EeFhOmEcJfDW+T+APwBRS4CpXi2952CL8KT+YDxSUq8BykfPPaTnxw/kcsuuBaw3/04aBKQmmKZpCShbpP0iBR9NGUvdPYBX+W1JMJXVvPgVt6pbAX8zuPOVq2uOBxyL8l/KoYvWHUNRK/V8F+KFclnQhL8OfY2AJ5ZSif1q7oAXO/4n9Ms6cknHmduZ2Zpx5PbN5WD4Cvg9CCmvzySywO3laER7+/Ns/BK7mjCVwDC9r8D/Bo19BOvx/K8Ia+CVTAD2C3Y104LFC/R77q7fhC5fljy3QAvgP2yZTlLd5o/3PCvW7AbVR8DqAZxh43jZgDs8vx/cZ/hQA5S1ed0Vmif3b2/6Bdm6mqF7n5hL9/4l9jDGONZx/r/3S/nl7FHwf5nvtIEuUjDObxwbFdXsMfO/HsX9OTHf/72oVXoH/97yLfZxeRu2j9tFyvMj+80cU85QT5rZfLK+bx2Ph+1W83b+0/pqi5Uy5hP//6f4rKQ84ZrFF9j/j7/3pl+b/BfCGE3vOe1iYAAAAAElFTkSuQmCC" alt="QR Code 1"/>
+      <div class="card-question">Qui est Nicolas Flamel ?</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="num">QR Code 2 / 10</div>
+        <div class="lieu">📍 Permanence</div>
+      </div>
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2AQAAAADNaUdlAAACRklEQVR4nO2ZQW7kMAwESyMDc6R/sE/h/GywP5Ofkh/QxwAyeg+Us3tKAgTYWEB0k3mYNqfJbtJFvHeO27th+Il/LY4CoIbXoOMdlxo4AN6/G98n8LukqlbDFd5NHa9SlRTXx38DSnmAH+sG2z22GryusJflIvg+E98f3XT8EvsT+71cDt+H8e0eW30pWDtWZ3/879//QlxqwFGeWHstjxqbAkz9Ivg+iG+lFPAaLPvzHiz7c4GjlLJeAt/7R3mCqtZNUus4eD6+fP9B4QoHB39roSkKM/RPJHVTqoAkrNVw8FEC343vE/hbhxoMwKYU326tTsIfLHPfgA7dlG80R/7Da3i6BanVoIZ3a5jm8D9qirRtAs8ulPyfo/9ICrCWtJGU/ROYg/9SVeujEEbz6QA+B/6gm7CWf0HSPq+z8B/oeDflCJMSPE//V7KFcwrLQp6GP9l/rKUE5LWmC5og/zf2Z1m5B6U8jpVjpay8rizWalwB3wdHQQ1PFnWoJ3lSES6ff9JwYm3oVwBjeJmE/xq27SyBztilzIE/zb+1FK8cB6SGtRnq9y//s+1gqv9sgSbAL9Uxf9GHBLe8zlG/OhNuLZ/UNws3CX/G/DXE602RqZPMv6eFPv0/jEKegD839lJKWcbk+Lvvz/TPy1XwfRj3XDvk5rasLNYW6Gwz7G9H/0/+D/9vShWegf9n3MT+qC+l76XvJef3GfafZ/4lzl1EJzcS0+x/zhHYpVbV8nVyLzQDfkiqw5CwMQ5Psf8pP99PvzX+B1bSFsxmCS6JAAAAAElFTkSuQmCC" alt="QR Code 2"/>
+      <div class="card-question">À quoi sert le dispositif pHARe ?</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="num">QR Code 3 / 10</div>
+        <div class="lieu">📍 Salle 105</div>
+      </div>
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2AQAAAADNaUdlAAACJklEQVR4nO2ZQW4bMQxF30Te0zfIUZibFbkZfZTegFkG4OB3QdkxCtQJ2iKxgBBeyMPFfEnk5ydnE7dsf7jphm//v/lRAgxJ6eBKHxLW1+L11fg+gN8lDUkKLEYyFIX3jpbADz4UQIHONpKxAP6Lv7fg2/Z0gG17+uz3/6X/cLV28jiK/Zif9/7/4ZeCl+31eNofY9+28XMrwFR3gu+mTf5J/+0HrME/V1YmKQoHn0++Gt9H+KfOtDkUZbosFsE/Q32kl0XhmJQMaQX+fKtf4EpGIoUa/BLxPzFrpHf8DwUmLFaJH0mYRk4uUlIwpBXO/wHTtm3K034Ei8IPMBT7kcNd4HvHlJQJU3X8NwWlF75G/kpDoeStZkFZjPRV4r8ssCiLvghwLLBYo/5mU2iM9Lp6MtJXwP8Afpgy9ARI2o8Op9fH5zvBd9ukaAnR5N9/uwXD1on/KURdswp4l7MF8CvK4pICrXyUsxYsgP8s+AsusrN3sQZ+qXoXiqkckks7sAR+Wu2Y+sxbCPVdLIG/rFOAzt+6mgItgD975hat/Lvytv5ZY36lwDRbGJu7mBJuifjJuSjr4jUzGpaYv53nDz1FbM1pcS5kK+BPgCmhW0tL4CNZJn+lMbv4AMd0KcRL4Afv+QMw0jsLYJnz72i5aM5mpIIV+Ofst6iXHwd7Lk4HKE7gvDzdDb4/mt4if7bALaFXmh+e588t3rodWER/bt/fT7/U/wuOoUTJqbG2CAAAAABJRU5ErkJggg==" alt="QR Code 3"/>
+      <div class="card-question">Que signifie le label E3D ?</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="num">QR Code 4 / 10</div>
+        <div class="lieu">📍 Salle 110</div>
+      </div>
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2AQAAAADNaUdlAAACT0lEQVR4nO2ZQYobQQxFX40aZqmGXCcgQw425GCB8lFygIB6GSjzs1DbEwJxTBLGLhjhRbu16N9VX7++1E1ci9PT1TS85/8tjxLA1CFwSV2SMgCIcW98N+APSSYBJikZMFwmKR8f/xPQ2oHtIPUBeF9cbAe2tjwIvmuxXK4a8WVB2wtbe7vn/7+86fMCbT0O71UUb/v8v8uf+Z8Aw3vVL8Qk/D/rT8YvP2AO/anIgBhg6ibh++0J8GdQ+u99EMP78A51cwb86nh/lf0MS5QxXPgM+BNJeN//uyTh2rfj3vhu4b8lg7AEF2AZw6XahXvju2X9B1EXeMdlialbMof+ZEBIXeq7Cnkv/k+iP3sJW+62zVTkZxL+9+L/cA2ijuO6ngS/iu3D+8VISN2KS/fGdwv+sVcxA8r/2Ez6H7iqbE3lPGMX/ynWP2vNu2Uow1QSGhCz6H/JZsn+xQ5ZTuJ/Ms5qQxUve1PQJ9H/GP5qPvfjAJhG/4X3cp7K3f+bxFT1W/OTyxbg3TIm0U/K/9TwxJKq3HqpGfDHLp7qo0ZwSfmfGc7fJ+C0MqC1w+J9bA1XgVc+Br5rsQD2dcXz9CEbx4+ecPz0bQWWb/fHd/P8AfwyhYhBVF85AX+21lpbvNvXw2nFkmd1SxaitcMD4PtjPiSxvZzW43PyfWVshwUGx/EY+K7HxfwUYSxfxccm8G8/5V2tteEa28vi3XKK9b/k47Qepc52eD63Y6f1gfD9Ls7fX3oNnM/9F9UOPDx/LvNnqnmp4YOmmf+09++nd83/AP4VIJ6bYbqGAAAAAElFTkSuQmCC" alt="QR Code 4"/>
+      <div class="card-question">Quelles options de langues en 5e ?</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="num">QR Code 5 / 10</div>
+        <div class="lieu">📍 Salle 220</div>
+      </div>
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2AQAAAADNaUdlAAACXklEQVR4nO2ZQYrjQAxFX6UMWZZv0EeRbxb6ZpWj5AbyMiDzZyF392ymE2Zg4oIWIcTWIt/iS/+rXMR3sZ2+TcNP/t/yyAGqW34HJnUwACxeje8J/Capqle3aIqmwKpUJfnx8Z+AUhaw7e293srZr9W5z7CW6SD4nsmvS2Dbm1gvtPfpcPge589+rbdC69tsrMt///+/z0sdrveyTK3fy1L9KoemOAi+B/lrKQXs7MZ6OTvTeplgK6XMh8D3fSjDqerRJPXAwPL24ecPcpMbEFj+jqYUhRHmJ8qyu1U3SbRe3cD2Fng1vmfwV6eq74CbUnyj9ToIf6LtLQAERFNA9SHqfwLqbZkATOpn53xbaH17E+tyCHzfhtQlBSYJLKdQ8n+M+SNJndaj9YB8lmyBUfiftrk68TF8AsDGwJ+E+f2D0Tqtj+H/1VO2qpuc3F9ipPkvoLrlClM979hA/JFbTiGp52VNFzRA/U+slzIzwbQu28w2U2buM1Pr1Y+A70HISecTWED9IE8qwuHrj5wAWt/1y4F9eRmD/w5YNNF61e7/qxPj9C+74OYItWxnWh+hf/ncWapU1WnaD4KGqX8Krqp6tDRvpP8ZoX9PgBzdlvvMtC7TWj79zxj7e86f3Uj33TYDeRz6anxPnz9YGraqHrA38hD8WUspZdo3x/dYL8mf6Sj4HsTX+XMuMtnLbvJR9CsnP9LXCpAqPAL/P/JNZb7WW4m1xFoixetA+B7n0zOc3cCm9VL9OrV+IHx/iE/+p22o6rm5yIfw/1/vvwKidYCmND8j7L/l5/3pS/O/AFb7DokvBa79AAAAAElFTkSuQmCC" alt="QR Code 5"/>
+      <div class="card-question">Combien d'heures de français en 6e ?</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="num">QR Code 6 / 10</div>
+        <div class="lieu">📍 Salle 216</div>
+      </div>
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2AQAAAADNaUdlAAACYElEQVR4nO2ZTYrjQAxGX0WGLMswB+ijKDcLfbPKUXIDeRko881CTno16cAMExe0FiZYizwVX+nPRTyz9fDUDT/+v/OjALDwXluv6rjUwAHw/m6+F/hdkqlZuKQMwSSTFPvnPwClnMDX+cJSjnGx4DbDUqad8L3iX069av0Qy5n6Oe2O70/2RXrs2LVYbeuvYDn9p///F36pweVWTtR2KyeLiwKq+k74vvFfSingx2BazvmcYC2lzLvge25KuycfqXUcPF/vPv+gcIUD1Ja/e1UWhRHyJ1JLcpMkUZuFg29X4N18r/ArsMhA1Kuy+PbabBD9JHZqpkOv6mAxxPkfAF1PE6yzS+0YHK8nals/xHLaBd9Tk5qUbZvATS0lpGCQ/IMCauu1dchY8gqMoX/JlIL3R/LpAD4Kf8fz/Kki809t1DZG/y+Bd7xXWZDzSx8p/wswyQILt9giGkc/TeFfT2Utbh0f4fwPLOcyM8EE68w6U2ZuM1NtFnvg+8b0mHyhg93FkxVh9+ePgpRKasYC2IaXQfQvIJOnaev/MxGNwR+YMvM3C88RIJvqEe4vCs+ek9xcVVn4Yws0AL9k4RZbz9+rsvKmawj+rf7e31j41sKNoR9yWuk1i1d2RJCBvJvv9f1DysbUshfdNhLv5nuh/pZSyraGq599OWf/PO2F71u/39cOKCgzU20TdC4j7G9ROLh9VQFRlVV4BP3f/VW3GV1LX0pfSpbjQfafm00AfgwHn5azxWWqbUd8f7DH9xdJUjO1nFy2vdC7+V7J/2wJk14bkL1QDsK75y8/30/f6v8N5lQGI65zcyMAAAAASUVORK5CYII=" alt="QR Code 6"/>
+      <div class="card-question">Que signifie EMC ?</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="num">QR Code 7 / 10</div>
+        <div class="lieu">📍 Salles 214 et 211</div>
+      </div>
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2AQAAAADNaUdlAAACQUlEQVR4nO2ZQYrcQAxFX00ZZinfSL7ZXE19lNxAXg5U87OQ3YRAOiEJMy4Y0Qt3/YU/8teXLDfxLO4vT2H4wv8V31trbeF2X2Hf4Aawb6211rYL8PtNKF1SlwBMSgYMU5eUPj6b35/grW3smxIlWCwm9o29LRfh9yyWx1XD7wva39jbx93//+FdsUBbb8NC+fH3/3tcCrjd24aFFD29rWAaF+H3NCrVPf2nHwDXr19UUbYDXdEl7Di+PP+XsvrFAhz8feV9vR2Hl+D3m5BilO1bDFNP74nShwm7fv5RcjavAEo5mLAYs+g/UXpPMAE9vZ7IDP0XJQPvyQAsMPWkK3oyh/+kg0shRV0Pi9L/DP5z6AeLnsfY1lXiZw79J10xYFiA1zg6TAOfg7+iJz29nKfn49Dn0L+iircr6q+kPpP/O0UVumry9MP8p8h/Vs6jXri6ykK9amEO/ungZftKh8P/+yT++XCbKl6Ol+KYw//PUgWwKDkVNIv+MQ2LnkcvOFrYLPWrGHj5/ziGh2rHPol/0k8LqqdQlVuONAN/Hxbl/4PqwlHzzwz99wV4Tca+LRaLxdjbffUir7wGv6ehdB2CERbDpHP471P0r3P/gOmY//GBK5nB/8/9s4W+bW2lJ6+Kniz4DPvnF3BJ7Af595WxbwsMbpPs387hpxbpycN8ZtD/D7jFvbVhGvvbYtFzivw/cB/cuoJ9K/0Pi/t6IX6/ivP7S/T0x9h5yGkC/Tz2zwz8XN6Gptn/tK/vp5+Kfwct8BACFFlHfgAAAABJRU5ErkJggg==" alt="QR Code 7"/>
+      <div class="card-question">Combien d'élèves au collège en 2026 ?</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="num">QR Code 8 / 10</div>
+        <div class="lieu">📍 CDI</div>
+      </div>
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2AQAAAADNaUdlAAACUUlEQVR4nO2ZQW7cMAxFn0IDWco3mKNwbhb0ZvJRcoACnOUAMn4XlNPdNGiLjAWEC8M2F/6iqM9PuohHtr88dMO3/9/8KABMApekcJOouS3en43vE/hdkkm9NmqzwNQ6bpLi/PgXoOCwXSu6rULgiOW22s/n4/u03y3YVy/lukAp16/+/l/6l+NmAyxW6+xrfN33/wd+wXJ7u69RarsW9F76AlXcno/vE/6tlAK8vl/t/c3CF/w12Esp6ynwPTYdZmq9SmodH1wqnZ5/UHivzQaLtl5lasda5sDPR9hrXqXAJJuA/zP+osrCFVggNSX4OeovFmTOZ/6bGlXUNkn+kPrBYmghBR1MmiH+L+CllM62r2T+L2Bq+8pyDnyPTWq9KpEP8VZH8s9xfiWTFFh4B/AOH4w6A/7Wa6Mqz2/eUBu1zaL/gZ7MP96gcAufB7+bGrV1kNRxBX2W+KspXEHHpZaPNsrxDPk/Qk0eXo0q4Bbep8Cv1mtTILUhISTFqAUT4A/P4tvhQ3bmKmbBf8T/WEWMpmCW/LHAAqoy5imEci9Oj/8F2C+6r3S2e7labPdLG1397XoKfA8t+T8nV1KW3dQSPsP8anQrqdlyFb0eEm6C/BlqH+g1ixe9Kt/Moj+TMIGhOWs7CtkM+APA1EbPriYpx4mz8H8yf4of8N+9/AT6/4Wc1laVlb1cLVBsna2s3Mv5+fPw34oF4PulAeWiDtR2Gnx/8td2X32pPzrbAp0NfJb6lZNDCyyc0X8xz/wQwMKzf7ejHZhEf5bv/6dP9f8Czbsefedg8EIAAAAASUVORK5CYII=" alt="QR Code 8"/>
+      <div class="card-question">Que veut dire CDI ?</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="num">QR Code 9 / 10</div>
+        <div class="lieu">📍 SEGPA</div>
+      </div>
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2AQAAAADNaUdlAAACYklEQVR4nO2ZwW3kMBAES0sCfpIZOJRRBheS4cyoUDaD0dMAib7HSPu7tXEHnEXAjX0Qmsc2yFFPs7WIZxi3p2X4qf9bHTlAcpIDdKC0pDgW69/N7wt1k0Rp47Ultxe3Dh2SJL8Ev+eQG1hyAwM6SI2i5CSfYv8BKO9JTc6Ls1TSfb0Yv8/rH5XxKkpLbpT23///7+rITVJyo0hqSZJbcovFDP2zLcsCpPua9zf2NQMwlmWpl+D3HDpBkZw4i3Q+vPz+I7ckheBQmpwk9aJeNIv+jIru66ihpcDGvma2Ua/B7ynklpyk9thzSuvHRL7+/h/8OyS1JHWO5k9us/Q/pVEaWMeSW8fi4Qz6mSkt338JtFfgIwPbqHYRfl/Rf9jyvo4KbJlj+MrJ1+D3HJKAjoHFuxATGehlhv5XkxO2JxbhHyhT+AcUOnkY5rD9xtFFs/AnhWC69dLkdA5TNwF/tV5a7HnQhlgzg/7f2N9enHzO3FGRIyeXNod/CJ8PvZxCVNoxhSfpn7j/Rtv30ggjpDZH/7uFeYvM5HEX63Po/w22Ucn7AhulsS+j0vc1x43gAvyeQ2rJ6UVhQeM4KEpz6OeNfR3VMuSiUckwqvV97Wz9Evw+gSSpxSkkKeI4qTGH/qNz+IZs6khOiHF2ef63Q2qA/Q0YdfuogIWvuAC/z+r7sixLZutsubznItgy5Kvw+wRH/qbWSzifuBGEl5ui/w0s3twjAnqE/1P0/4nQnLBwkUUntQvx+wMe+X/8elHY6c40+Y8U5scethOILHQG/nB+/4qzOC3cFPnP8vP99FvrvwEvzQd+LiLbgAAAAABJRU5ErkJggg==" alt="QR Code 9"/>
+      <div class="card-question">Découverte de la SEGPA</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="num">QR Code 10 / 10</div>
+        <div class="lieu">📍 Hall de la SEGPA</div>
+      </div>
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2AQAAAADNaUdlAAACKElEQVR4nO2ZQYpjMQxE3299mKVzgz6KcnQF5iJzA2XZoFC9kH+WIczAJIb26mMtUpGlqrK8iUfr9vEwDD/xf4ujBDCJEZZuiaUrHQCvV+N7Ar9LMknpJtUIKWrMnSXwg1u6KZReYOnFPIi3x78fHxc2xAX8N5f77svxPR13U9w+tcPXZ3RT/Nff/8v4Dgh2+DrlxtmKvdhwhri+Ht8T8cu2bcCvP2dLuJ65ni25bdt2egt8j5d6JRxcJIkxt9++f5t/MEWBdFfj3lwBv4KhwpVedP5D6TXEWAF/61d6jTBFkz9DjKgl9FcHVFC69XEMKVlDfxWMaP8jhUmAKSxZyP8UromZGrP+F+EfoD0nbd6OimKt+jcFYIlJNVT4Gvhztq2lW7qmEISlr1H/Uhv+whnRttkW4n+pxkH70N8Hoy6U/+iEw8w/rcivxvdM/ZuCEX0Q8+almI38anzP6JclBX1/bOem9CbSBfCn1whG1AiG+iLcoUXqPzrzTaFt+01inf6tlq1k9m87ovQ1+DMB2nC2chWY1F5uBfw+3eYIk1qC2/+sob9d8+nqyeG8fK2jX+kMdf6bMw8j7SvM3+7zBzdp+n+8cCWL8D/0/Bmq7Wj/nTX85we4JK5bD8+3E/v1vENxqffA93gd82dg9m8d5LNG/R/zc6b/v38sMn848t/61S8XppAWmf/M95coYKiniPdXpBXwQ7+5jGBET960zPxn+3k/fWn8G7Y/Omx8f/Y7AAAAAElFTkSuQmCC" alt="QR Code 10"/>
+      <div class="card-question">Dans quel sport les élèves se sont-ils qualifiés pour les Championnats de France UNSS ?</div>
+    </div></div>
+<div class="footer">
+  Imprimez cette page, découpez les cartes et placez-les dans chaque salle.<br>
+  Conseil : plastifiez les QR codes pour la durée de l'événement.
+</div>
+</body>
+</html>
