@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>QR Codes – Journées Portes Ouvertes – Collège Nicolas Flamel</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Palatino Linotype', Palatino, serif;
+    background: #f5f0e8;
+    color: #2a1a00;
+    padding: 24px;
+  }
+
+  .page-title {
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .page-title h1 {
+    font-size: 22px;
+    color: #7a4a00;
+    letter-spacing: 1px;
+  }
+  .page-title p {
+    font-size: 14px;
+    color: #9a6a20;
+    margin-top: 4px;
+  }
+
+  .url-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff8ec;
+    border: 1px solid #c8a050;
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin: 16px auto 24px;
+    max-width: 700px;
+  }
+  .url-bar label {
+    font-size: 13px;
+    color: #7a4a00;
+    white-space: nowrap;
+    font-weight: bold;
+  }
+  .url-bar input {
+    flex: 1;
+    border: 1px solid #c8a050;
+    border-radius: 5px;
+    padding: 6px 10px;
+    font-size: 13px;
+    font-family: monospace;
+    color: #2a1a00;
+    background: #fffdf8;
+  }
+  .url-bar button {
+    background: #c8860a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 7px 16px;
+    cursor: pointer;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  .url-bar button:hover { background: #a06808; }
+
+  .print-btn {
+    display: block;
+    margin: 0 auto 28px;
+    background: #2a6a2a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 32px;
+    font-size: 16px;
+    cursor: pointer;
+    letter-spacing: 1px;
+  }
+  .print-btn:hover { background: #1a4a1a; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: white;
+    border: 2px solid #c8a050;
+    border-radius: 10px;
+    padding: 16px 12px 14px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .card-header {
+    background: linear-gradient(135deg, #7a4a00, #c8860a);
+    color: white;
+    border-radius: 6px;
+    padding: 7px 10px;
+    margin-bottom: 12px;
+  }
+  .card-header .num {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: .85;
+  }
+  .card-header .lieu {
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 2px;
+  }
+
+  .qr-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  .qr-wrap canvas, .qr-wrap img {
+    border: 3px solid #c8a050;
+    border-radius: 6px;
+    padding: 4px;
+  }
+
+  .card-question {
+    font-size: 13px;
+    color: #5a3a00;
+    line-height: 1.5;
+    font-style: italic;
+    min-height: 40px;
+  }
+
+  .card-url {
+    font-size: 9px;
+    color: #9a7a40;
+    font-family: monospace;
+    margin-top: 8px;
+    word-break: break-all;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 28px;
+    font-size: 12px;
+    color: #9a7a40;
+  }
+
+  /* ── IMPRESSION ── */
+  @media print {
+    body { background: white; padding: 10px; }
+    .url-bar, .print-btn, .footer { display: none; }
+    .grid { gap: 10px; max-width: 100%; }
+    .card { box-shadow: none; border: 1.5px solid #c8a050; }
+    .page-title { margin-bottom: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-title">
+  <h1>⚗️ À la découverte du collège Nicolas Flamel</h1>
+  <p>Journées Portes Ouvertes — QR Codes à imprimer et afficher dans chaque salle</p>
+</div>
+
+<!-- Barre de configuration URL -->
+<div class="url-bar">
+  <label>🔗 URL de l'application :</label>
+  <input type="text" id="baseUrl" placeholder="https://VOTRE-SITE.netlify.app/flamel-chasse-tresor.html"/>
+  <button onclick="regenerate()">Générer</button>
+</div>
+
+<button class="print-btn" onclick="window.print()">🖨️ Imprimer les QR codes</button>
+
+<div class="grid" id="grid"></div>
+
+<div class="footer">
+  Imprimez cette page, découpez les cartes et placez-les dans chaque salle.<br>
+  Conseil : plastifiez les QR codes pour la durée de l'événement.
+</div>
+
+<script>
+const STOPS = [
+  { id:1, lieu:"Hall d'entrée",     question:"Qui est Nicolas Flamel ?" },
+  { id:2, lieu:"Permanence",        question:"À quoi sert le dispositif pHARe ?" },
+  { id:3, lieu:"Salle 105",         question:"Que signifie le label E3D ?" },
+  { id:4, lieu:"Salle 110",         question:"Quelles options de langues en 5e ?" },
+  { id:5, lieu:"Salle 220",          question:"Combien d'heures de français en 6e ?" },
+  { id:6, lieu:"Salle 216",          question:"Que signifie EMC ?" },
+  { id:7, lieu:"Salles 214 et 211",  question:"Combien d'élèves au collège en 2026 ?" },
+  { id:8, lieu:"CDI",              question:"Que veut dire CDI ?" },
+  { id:9, lieu:"SEGPA",            question:"(Découverte de la SEGPA)" },
+  { id:10,lieu:"Hall de la SEGPA", question:"Dans quel sport les élèves se sont-ils qualifiés pour les Championnats de France UNSS ?" },
+];
+
+function getBase() {
+  const input = document.getElementById('baseUrl').value.trim();
+  if (input) return input;
+  // Auto-detect : remplace qrcodes.html par l'app
+  return window.location.href.replace('qrcodes.html', 'index.html');
+}
+
+function regenerate() {
+  const base = getBase();
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+
+  STOPS.forEach(stop => {
+    const url = `${base}?q=${stop.id}`;
+
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    card.innerHTML = `
+      <div class="card-header">
+        <div class="num">QR Code ${stop.id} / ${STOPS.length}</div>
+        <div class="lieu">📍 ${stop.lieu}</div>
+      </div>
+      <div class="qr-wrap" id="qr-${stop.id}"></div>
+      <div class="card-question">${stop.question}</div>
+      <div class="card-url">${url}</div>
+    `;
+
+    grid.appendChild(card);
+
+    // Génération du QR code
+    new QRCode(document.getElementById(`qr-${stop.id}`), {
+      text: url,
+      width: 180,
+      height: 180,
+      colorDark: "#2a1a00",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  });
+}
+
+// Initialisation automatique
+window.addEventListener('load', () => {
+  // Pre-fill avec l'URL détectée
+  const auto = window.location.href.replace('qrcodes.html', 'index.html');
+  document.getElementById('baseUrl').value = auto;
+  regenerate();
+});
+</script>
+</body>
+</html>
